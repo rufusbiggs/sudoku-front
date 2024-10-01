@@ -10,8 +10,10 @@ let SOLUTION = '3964271854725819361859367247132485695487693122691538478243756919
 
 export default function Home() {
 
-  const [boardCode, setBoardCode] = useState('');
+  const [startCode, setStartCode] = useState('')
+  const [currentCode, setCurrentCode] = useState('');
   const [solution, setSolution] = useState('');
+  const [selectedCell, setSelectedCell] = useState<number | null>(null);
 
   const splitCodeToRows = (code: string) => {
     const rows = [];
@@ -23,23 +25,61 @@ export default function Home() {
     return rows
   }
 
+  const handleCellClick = (rowIdx : number, tileIdx : number) => {
+    const idx : number = (rowIdx * 9) + tileIdx;
+    setSelectedCell(idx);
+  }
+
+  const handleIncorrectNum = () => {
+    console.log('idiot!')
+  }
+
   useEffect(() => {
     const startGame = async () => {
       // Fetch code and solution data from API
       // da da da
 
-      setBoardCode(CODE);
+      setStartCode(CODE)
+      setCurrentCode(CODE);
       setSolution(SOLUTION);
     }
 
     startGame();
   }, [])
 
+  useEffect(() => {
+    const handleKeyPress = (e: KeyboardEvent) => {
+      if (selectedCell === null || isNaN(Number(e.key)) || e.key === ' ') return
+
+      const codeCopy = currentCode;
+      const updatedCode = codeCopy.slice(0, selectedCell) + e.key + codeCopy.slice(selectedCell + 1);
+      setCurrentCode(updatedCode);
+
+      if (solution[selectedCell] !== updatedCode[selectedCell]) {
+        handleIncorrectNum()
+      }
+
+      setSelectedCell(null);
+    };
+
+    window.addEventListener('keydown', handleKeyPress);
+
+    return (() => {
+      window.removeEventListener('keydown', handleKeyPress);
+    });
+  }, [selectedCell, currentCode, solution])
+
   return (
     <main className={styles.main}>
-      {splitCodeToRows(boardCode).map((row, idx) => {
+      {splitCodeToRows(currentCode).map((row, idx) => {
         return (
-          <TileRow key={idx} rowNumbers={row} />
+          <TileRow 
+            idx={idx} 
+            rowNumbers={row} 
+            rowIdx={idx} 
+            handleCellClick={handleCellClick} 
+            selectedCell={selectedCell}
+          />
         )
       })}
     </main>

@@ -4,12 +4,12 @@
   justify-content: space-between;
   align-items: center;
   padding-top: 5rem;
-  gap: 1px;
+  /* gap: 1px; */
 }
 
 .tile {
-  width: 30px;
-  height: 30px;
+  width: 40px;
+  height: 40px;
   border: solid 1px white;
   align-items: center;
   justify-content: center;
@@ -19,5 +19,6 @@
 .tileRow {
   align-items: center;
   display: flex;
-  gap: 1px;
+  /* border: solid 0px white; */
+  /* gap: 1px; */
 }
