@@ -5,11 +5,12 @@ interface TileProps {
   number: number;
   tileIdx: number;
   rowIdx: number;
+  cellError: number | null,
   handleCellClick: (rowIdx: number, tileIdx: number) => void;
   selectedCell: number | null;
 }
 
-const Tile: React.FC<TileProps> = ({ number, tileIdx, rowIdx, handleCellClick, selectedCell }) => {
+const Tile: React.FC<TileProps> = ({ number, tileIdx, rowIdx, cellError, handleCellClick, selectedCell }) => {
   const leftBorderWidth = (tileIdx % 3 == 0) ? '2px' : '1px';
   const leftBorderColor = (tileIdx % 3 == 0) ? 'black' : 'white';
   const rightBorderWidth = (tileIdx == 8) ? '2px' : 'px';
@@ -17,7 +18,9 @@ const Tile: React.FC<TileProps> = ({ number, tileIdx, rowIdx, handleCellClick, s
   
   const cellIdx : number = (rowIdx * 9) + tileIdx;
   const isSelected = cellIdx === selectedCell;
-  const backgroundColor = isSelected ? 'lightblue' : undefined;
+  const isError = cellIdx === cellError;
+  const backgroundColor = isSelected ? 'lightblue' : isError ? '#FF6961' : undefined;
+  
 
   const tileStyle = {
     borderLeftColor: leftBorderColor,
@@ -36,7 +39,7 @@ const Tile: React.FC<TileProps> = ({ number, tileIdx, rowIdx, handleCellClick, s
       key={tileIdx} 
       onClick={() => handleCellClick(rowIdx, tileIdx)}
     >
-        {number == 0 ? '' : number}
+        {number == 0 ? '' : isError ? '' : number}
     </div>
   )
 }

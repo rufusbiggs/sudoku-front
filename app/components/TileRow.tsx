@@ -6,11 +6,12 @@ interface TileRowProps {
     rowNumbers: number[],
     idx: number,
     rowIdx : number, 
+    cellError : number | null,
     handleCellClick : (rowIdx : number, tileIdx : number) => void, 
     selectedCell : number | null
 }
 
-const TileRow: React.FC<TileRowProps> = ({ rowNumbers, idx, rowIdx, handleCellClick, selectedCell }) => {
+const TileRow: React.FC<TileRowProps> = ({ rowNumbers, idx, rowIdx, cellError, handleCellClick, selectedCell }) => {
     const topBorderWidth = (idx % 3 == 0) ? '2px' : '0px';
     const topBorderColor = (idx % 3 == 0) ? 'black' : 'white';
     const BorderColor = (idx == 8) ? 'black' : 'white';
@@ -31,6 +32,7 @@ const TileRow: React.FC<TileRowProps> = ({ rowNumbers, idx, rowIdx, handleCellCl
             number={num} 
             tileIdx={idx} 
             rowIdx={rowIdx} 
+            cellError={cellError}
             handleCellClick={handleCellClick}
             selectedCell={selectedCell}
         />
