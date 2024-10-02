@@ -16,6 +16,7 @@ export default function Home() {
   const [selectedCell, setSelectedCell] = useState<number | null>(null);
   const [falseAnswers, setFalseAnswers] = useState(0);
   const [cellError, setCellError] = useState<number | null>(null);
+  const [gameOver, setGameOver] = useState(false);
 
   const splitCodeToRows = (code: string) => {
     const rows = [];
@@ -33,7 +34,8 @@ export default function Home() {
   }
 
   const endGame = () => {
-    console.log(`Game over`);
+    setGameOver(true);
+    // show solution
   }
 
   const handleIncorrectNum = () => {
@@ -100,7 +102,7 @@ export default function Home() {
         })}
       </div>
       <div>
-        <Buttons />
+        <Buttons falseAnswers={falseAnswers} cellError={cellError} />
       </div>
     </main>
   );
