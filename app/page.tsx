@@ -68,7 +68,6 @@ export default function Home() {
     };
 
     fetchSudoku();
-    console.log('hello world')
   }, [])
 
   useEffect(() => {
