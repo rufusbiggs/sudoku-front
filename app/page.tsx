@@ -57,6 +57,7 @@ export default function Home() {
       try {
         const response = await fetch('http://127.0.0.1:5000/generate?difficulty=2');
         const { board, solution } = await response.json();
+        console.log(board, solution);
         setStartCode(board);
         setCurrentCode(board);
         setSolution(solution);
