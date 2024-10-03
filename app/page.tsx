@@ -53,16 +53,21 @@ export default function Home() {
   }
 
   useEffect(() => {
-    const startGame = async () => {
-      // Fetch code and solution data from API
-      // da da da
+    const fetchSudoku = async () => {
+      try {
+        const response = await fetch('http://127.0.0.1:5000/generate?difficulty=2');
+        const { board, solution } = await response.json();
+        setStartCode(board);
+        setCurrentCode(board);
+        setSolution(solution);
+        console.log(board);
+      } catch (error) {
+        console.error("Error fetching Sudoku data:", error);
+      }
+    };
 
-      setStartCode(CODE)
-      setCurrentCode(CODE);
-      setSolution(SOLUTION);
-    }
-
-    startGame();
+    fetchSudoku();
+    console.log('hello world')
   }, [])
 
   useEffect(() => {
