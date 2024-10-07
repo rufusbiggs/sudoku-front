@@ -21,12 +21,12 @@
 }
 
 .solution {
-  opacity: 0;
-  transition: opacity 1s ease-in-out; /* 1-second fade-in effect */
+  opacity: 1;
+  transition: opacity 2s ease-in-out; /* 1-second fade-in effect */
 }
 
 .fade-in {
-  opacity: 1;
+  opacity: 0;
 }
 
 .tile {

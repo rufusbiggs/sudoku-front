@@ -40,6 +40,7 @@ export default function Home() {
   const endGame = () => {
     // Show a transition before revealing the solution
     setTimeout(() => {
+      console.log('show solution')
       setGameOver(true);
       setShowSolution(true); // Trigger fade-in of the solution
     }, 1000); // Delay of 1 second after last wrong answer
@@ -82,6 +83,7 @@ export default function Home() {
 
   const newGame = (difficulty : number) => {
     setGameOver(false);
+    setShowSolution(false);
     setFalseAnswers(0);
     fetchSudoku(difficulty);
   }
@@ -112,7 +114,7 @@ export default function Home() {
       <h1>Sudoku Game</h1>
       <div>
         {loading ? (
-          <div>Loading...</div>  // Spinner shows during loading
+          <div>Generating new board...</div>  // Spinner shows during loading
         ) : gameOver ? (
           <div>
             <h2>Game Over! Here is the solution:</h2>
