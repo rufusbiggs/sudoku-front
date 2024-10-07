@@ -4,13 +4,8 @@ import styles from "./page.module.css";
 import TileRow from "./components/TileRow";
 import Buttons from "./components/Buttons";
 
-// Testing boards
-let CODE = '000000000072001030180006720700200560500000002069003007024300091030600450000000000'
-let SOLUTION = '396427185472581936185936724713248569548769312269153847824375691937612458651894273'
-
 export default function Home() {
 
-  const [startCode, setStartCode] = useState('')
   const [currentCode, setCurrentCode] = useState('');
   const [solution, setSolution] = useState('');
   const [selectedCell, setSelectedCell] = useState<number | null>(null);
@@ -65,7 +60,6 @@ export default function Home() {
     try {
       const response = await fetch(`http://127.0.0.1:5000/generate?${difficulty}=2`);
       const { board, solution } = await response.json();
-      setStartCode(board);
       setCurrentCode(board);
       setSolution(solution);
     } catch (error) {
@@ -106,7 +100,7 @@ export default function Home() {
     return (() => {
       window.removeEventListener('keydown', handleKeyPress);
     });
-  }, [selectedCell, currentCode, solution])
+  }, [selectedCell, currentCode, solution, gameOver, handleIncorrectNum])
 
 
   return (

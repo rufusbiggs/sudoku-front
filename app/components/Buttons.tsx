@@ -1,7 +1,13 @@
 import React from 'react'
 import styles from "./../page.module.css"
 
-const Buttons = ({ onNewGame, falseAnswers, cellError } : { onNewGame : Function, falseAnswers : number , cellError : number | null}) => {
+interface ButtonProps {
+    onNewGame: (difficulty : number) => void,
+    falseAnswers: number,
+    cellError: number | null,
+}
+
+const Buttons: React.FC<ButtonProps> = ({ onNewGame, falseAnswers, cellError }) => {
 
     const errorColor = cellError ? '#FF6961' : '#171717';
     const errorStyle = {

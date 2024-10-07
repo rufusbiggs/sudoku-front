@@ -29,6 +29,7 @@ const TileRow: React.FC<TileRowProps> = ({ rowNumbers, idx, rowIdx, cellError, h
       <div className={styles.tileRow} style={rowStyle}>
         {rowNumbers.map((num, idx) => (
           <Tile 
+            key={idx}
             number={num} 
             tileIdx={idx} 
             rowIdx={rowIdx} 
