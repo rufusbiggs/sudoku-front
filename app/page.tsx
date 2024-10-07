@@ -58,7 +58,7 @@ export default function Home() {
   const fetchSudoku = async (difficulty : number) => {
     setLoading(true);
     try {
-      const response = await fetch(`http://127.0.0.1:5000/generate?${difficulty}=2`);
+      const response = await fetch(`https://rufusbiggs.pythonanywhere.com/generate?${difficulty}=2`);
       const { board, solution } = await response.json();
       setCurrentCode(board);
       setSolution(solution);
