@@ -17,6 +17,8 @@ export default function Home() {
   const [falseAnswers, setFalseAnswers] = useState(0);
   const [cellError, setCellError] = useState<number | null>(null);
   const [gameOver, setGameOver] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [showSolution, setShowSolution] = useState(false); // For solution fade-in
 
   const splitCodeToRows = (code: string) => {
     const rows = [];
@@ -29,14 +31,19 @@ export default function Home() {
   }
 
   const handleCellClick = (rowIdx : number, tileIdx : number) => {
+    if (gameOver) return;
     const idx : number = (rowIdx * 9) + tileIdx;
     setSelectedCell(idx);
   }
 
+  
   const endGame = () => {
-    setGameOver(true);
-    // show solution
-  }
+    // Show a transition before revealing the solution
+    setTimeout(() => {
+      setGameOver(true);
+      setShowSolution(true); // Trigger fade-in of the solution
+    }, 1000); // Delay of 1 second after last wrong answer
+  };
 
   const handleIncorrectNum = () => {
     if (selectedCell !== null) {
@@ -52,26 +59,36 @@ export default function Home() {
     setFalseAnswers(falseGuesses + 1);
   }
 
-  useEffect(() => {
-    const fetchSudoku = async () => {
-      try {
-        const response = await fetch('http://127.0.0.1:5000/generate?difficulty=2');
-        const { board, solution } = await response.json();
-        console.log(board, solution);
-        setStartCode(board);
-        setCurrentCode(board);
-        setSolution(solution);
-        console.log(board);
-      } catch (error) {
-        console.error("Error fetching Sudoku data:", error);
-      }
-    };
+  const fetchSudoku = async (difficulty : number) => {
+    setLoading(true);
+    try {
+      const response = await fetch(`http://127.0.0.1:5000/generate?${difficulty}=2`);
+      const { board, solution } = await response.json();
+      setStartCode(board);
+      setCurrentCode(board);
+      setSolution(solution);
+    } catch (error) {
+      console.error("Error fetching Sudoku data:", error);
+    } finally {
+      await new Promise(resolve => setTimeout(resolve, 1000)); // pause for spinner
+      setLoading(false);
+    }
+  };
 
-    fetchSudoku();
+  // starts game on component mount
+  useEffect(() => {
+    fetchSudoku(1);
   }, [])
+
+  const newGame = (difficulty : number) => {
+    setGameOver(false);
+    setFalseAnswers(0);
+    fetchSudoku(difficulty);
+  }
 
   useEffect(() => {
     const handleKeyPress = (e: KeyboardEvent) => {
+      if (gameOver) return;
       if (selectedCell === null || isNaN(Number(e.key)) || e.key === ' ') return
       const codeCopy = currentCode;
       const updatedCode = codeCopy.slice(0, selectedCell) + e.key + codeCopy.slice(selectedCell + 1);
@@ -92,22 +109,51 @@ export default function Home() {
 
   return (
     <main className={styles.main}>
+      <h1>Sudoku Game</h1>
       <div>
-        {splitCodeToRows(currentCode).map((row, idx) => {
-          return (
-            <TileRow 
-              idx={idx} 
-              rowNumbers={row} 
-              rowIdx={idx} 
-              cellError={cellError}
-              handleCellClick={handleCellClick} 
-              selectedCell={selectedCell}
-            />
-          )
-        })}
-      </div>
-      <div>
-        <Buttons falseAnswers={falseAnswers} cellError={cellError} />
+        {loading ? (
+          <div>Loading...</div>  // Spinner shows during loading
+        ) : gameOver ? (
+          <div>
+            <h2>Game Over! Here is the solution:</h2>
+            <div className={`${styles.solution} ${showSolution ? styles.fadeIn : ''}`}> {/* Apply fade-in */}
+              {splitCodeToRows(solution).map((row, idx) => (
+                <TileRow
+                  key={idx}
+                  idx={idx}
+                  rowNumbers={row} // Use solution instead of current code
+                  rowIdx={idx}
+                  cellError={cellError}
+                  handleCellClick={handleCellClick}
+                  selectedCell={selectedCell}
+                />
+              ))}
+            </div>
+            <Buttons 
+              onNewGame={newGame} 
+              falseAnswers={falseAnswers} 
+              cellError={cellError} />
+          </div>
+        ) : (
+          <div>
+            {/* Render game grid */}
+            {splitCodeToRows(currentCode).map((row, idx) => (
+              <TileRow
+                key={idx}
+                idx={idx}
+                rowNumbers={row}   // Regular current code grid
+                rowIdx={idx}
+                cellError={cellError}
+                handleCellClick={handleCellClick}
+                selectedCell={selectedCell}
+              />
+            ))}
+            <Buttons 
+              onNewGame={newGame} 
+              falseAnswers={falseAnswers} 
+              cellError={cellError} />
+          </div>
+        )}
       </div>
     </main>
   );
