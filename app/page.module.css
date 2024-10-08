@@ -4,7 +4,7 @@
   justify-content: space-evenly;
   align-items: center;
   padding-top: 2rem;
-  gap: 10px;
+  gap: 20px;
 }
 
 .buttons {
@@ -14,6 +14,22 @@
   align-items: left;
   padding-top: 1rem;
   height: 200px;
+  gap: 10px;
+}
+
+.button {
+  background-color: lightblue;
+  color: black;
+  border: 1px solid white;
+  padding: 5px 5px;
+  font-size: 14px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: border-color 0.3s ease;
+}
+
+.button:hover {
+  border: 1px solid black;
 }
 
 .h1 {
@@ -22,7 +38,7 @@
 
 .solution {
   opacity: 1;
-  transition: opacity 2s ease-in-out; /* 1-second fade-in effect */
+  transition: opacity 2s ease-in-out; 
 }
 
 .fade-in {
@@ -32,6 +48,7 @@
 .tile {
   width: 40px;
   height: 40px;
+  background-color: #ededed;
   border: solid 1px white;
   align-items: center;
   justify-content: center;
@@ -42,3 +59,116 @@
   align-items: center;
   display: flex;
 }
+
+/* .main {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  padding-top: 2rem;
+  gap: 20px; 
+  background-color: #f0f0f5; 
+  min-height: 100vh;
+  padding-bottom: 2rem;
+} */
+
+/* .buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: left; 
+  gap: 20px; 
+  padding-top: 1rem;
+}
+
+.button {
+  background-color: #007BFF; 
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease; 
+}
+
+.button:hover {
+  background-color: #0056b3;
+}
+
+.h1 {
+  margin-bottom: 40px;
+  font-family: 'Arial', sans-serif;
+  font-size: 2rem;
+  color: #333;
+}
+
+.solution {
+  opacity: 1;
+  transition: opacity 2s ease-in-out;
+}
+
+.fade-in {
+  opacity: 0;
+} */
+
+/* .tile {
+  width: 40px; /* Slightly larger tiles for better interaction */
+  /* height: 40px; */
+  /* border: solid 2px #007BFF; Blue border for consistency with buttons */
+  /* background-color: #fff;
+  color: #333;
+  font-size: 16px;
+  align-items: center;
+  justify-content: center;
+  display: flex; */
+  /* border-radius: 4px; /* Slight rounding for a softer look */
+  /* margin: 2px; */ 
+/* } */
+
+/* .tileRow {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 0px;
+} */
+
+/* 
+.main {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 2rem;
+  background-color: var(--background);
+  min-height: 100vh;
+}
+
+
+.tileRow {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 5px;
+}
+
+
+.tile {
+  width: 40px;
+  height: 40px;
+  border: solid 1px var(--foreground); 
+  background-color: #fff;
+  color: var(--foreground);
+  font-size: 1rem; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 1px;
+  transition: background-color 0.3s ease, color 0.3s ease; /* Smooth transition */
+
+/* 
+.tile:nth-child(3n) {
+  border-right: 2px solid var(--foreground); 
+
+.tileRow:nth-child(3n) .tile {
+  border-bottom: 2px solid var(--foreground); 
+
+.tileRow:nth-child(3n) {
+  margin-bottom: 10px;  */ 

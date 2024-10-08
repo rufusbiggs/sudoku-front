@@ -19,9 +19,9 @@ const Buttons: React.FC<ButtonProps> = ({ onNewGame, falseAnswers, cellError }) 
         <div>
             New Game?
             <ul>
-                <button onClick={() => onNewGame(1)}>Easy</button>
-                <button onClick={() => onNewGame(2)}>Medium</button>
-                <button onClick={() => onNewGame(3)}>Hard</button>
+                <button onClick={() => onNewGame(1)} className={styles.button}>Easy</button>
+                <button onClick={() => onNewGame(2)} className={styles.button}>Medium</button>
+                <button onClick={() => onNewGame(3)} className={styles.button}>Hard</button>
             </ul>
         </div>
         <div style={errorStyle}>
